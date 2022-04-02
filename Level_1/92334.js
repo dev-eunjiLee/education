@@ -1,7 +1,10 @@
 // * 링크: https://programmers.co.kr/learn/courses/30/lessons/92334
 
+const sampleInput = [["muzi", "frodo", "apeach", "neo"], ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"], 2]
+
 function solution(id_list, report, k) {
 
+    // * 정답 제출용
     const answer = [];
 
     // * 어떤 유저에게 신고를 당했는지?
@@ -45,6 +48,44 @@ function solution(id_list, report, k) {
     return answer;
 }
 
-const sampleInput = [["muzi", "frodo", "apeach", "neo"], ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"], 2]
+// * 풀이 참조
+function solution2(id_list, report, k) {
 
-solution(...sampleInput);
+    // * 중복 제거
+    const reports = [...new Set(report)];
+
+    // * 한 유저가 신고받은 수 카운트
+    const userIdWithreportedCount = {}
+    reports.forEach((perReport) => {
+        const [reporterId, reportedId] = perReport.split(" ");
+        userIdWithreportedCount[reportedId] = userIdWithreportedCount[reportedId] ? userIdWithreportedCount[reportedId] + 1 : 1;
+    })
+
+    // * 유저의 알람 수 카운트
+    const userIdWithalarmedCount = {}
+    reports.forEach((perReport) => {
+        const [reporterId, reportedId] = perReport.split(" ");
+
+        userIdWithalarmedCount[reporterId] =
+            userIdWithreportedCount[reportedId] >= k
+                ?
+                (
+                    userIdWithalarmedCount[reporterId] === undefined
+                        ? 1
+                        : userIdWithalarmedCount[reporterId]+1
+                )
+                : userIdWithalarmedCount[reporterId]
+
+    })
+
+    const answer = id_list.map((perId) => {
+        return userIdWithalarmedCount[perId] || 0
+    })
+
+    // * NODE REFL에서 정답 확인용
+    console.log(answer)
+
+    return answer;
+}
+
+solution2(...sampleInput);
