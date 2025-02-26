@@ -3,10 +3,11 @@ function solution(num_list) {
   let sum = 0;
 
   for (const elem of num_list) {
-    multiplicationOfAll = multiplicationOfAll * elem;
+    multiplicationOfAll *= elem;
     sum += elem;
   }
 
-  return multiplicationOfAll < sum * sum ? 1 : 0;
+  // **: 지수연산자 => 거듭제곱을 표현할 때 사용 가능
+  return multiplicationOfAll < sum ** 2 ? 1 : 0;
 }
 console.log(solution([3, 4, 5, 2, 1]));
