@@ -15,3 +15,10 @@ function solution(x1, x2, x3, x4) {
 
 console.log(solution(false, true, true, true)); // true
 console.log(solution(true, false, false, false)); // false
+
+function solution2(x1, x2, x3, x4) {
+  return (x1 || x2) && (x3 || x4);
+}
+
+console.log(solution2(false, true, true, true)); // true
+console.log(solution2(true, false, false, false)); // false
