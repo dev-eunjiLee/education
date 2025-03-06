@@ -24,3 +24,11 @@ function solution(my_string) {
 console.log(solution("aAb1B2cC34oOp")); // 37
 console.log(solution("a")); // 0
 console.log(solution("a9")); // 9
+
+function solution2(my_string) {
+  return my_string.split(/\D+/).reduce((prev, curr) => prev + Number(curr), 0);
+}
+
+console.log(solution2("aAb1B2cC34oOp")); // 37
+console.log(solution2("a")); // 0
+console.log(solution2("a9")); // 9
