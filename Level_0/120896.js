@@ -13,3 +13,14 @@ function solution(s) {
 
 console.log(solution("hello")); // eho
 console.log(solution("abcabcadc")); // d
+
+function solution(s) {
+  const arr = [];
+  for (let elem of s) {
+    if (s.indexOf(elem) === s.lastIndexOf(elem)) arr.push(elem);
+  }
+  return arr.sort().join("");
+}
+
+console.log(solution("hello")); // eho
+console.log(solution("abcabcadc")); // d
