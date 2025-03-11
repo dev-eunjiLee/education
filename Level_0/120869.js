@@ -50,3 +50,16 @@ console.log(solution2(["z", "d", "x"], ["def", "dww", "dzx", "loveaw"])); //1
 console.log(
   solution2(["s", "o", "m", "d"], ["moos", "dzx", "smm", "sunmmo", "som"])
 ); //2
+
+function solution3(spell, dic) {
+  let sortedSpell = spell.sort().join("");
+  let sortedDic = new Set(dic.map((elem) => [...elem].sort().join("")));
+
+  return sortedDic.has(sortedSpell) ? 1 : 2;
+}
+
+console.log(solution3(["p", "o", "s"], ["sod", "eocd", "qixm", "adio", "soo"])); //2
+console.log(solution3(["z", "d", "x"], ["def", "dww", "dzx", "loveaw"])); //1
+console.log(
+  solution3(["s", "o", "m", "d"], ["moos", "dzx", "smm", "sunmmo", "som"])
+); //2
