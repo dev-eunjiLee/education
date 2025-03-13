@@ -15,3 +15,23 @@ function solution(s) {
 
 console.log(solution("banana")); //[-1, -1, -1, 2, 2, 2]
 // console.log(solution("foobar")); //[-1, -1, 1, -1, -1, -1]
+
+function solution2(s) {
+  const hash = {};
+
+  return [...s].map((elem, index) => {
+    let result = -1;
+
+    const originIndex = hash[elem];
+
+    if (originIndex !== undefined) {
+      result = index - originIndex;
+    }
+
+    hash[elem] = index;
+    return result;
+  });
+}
+
+console.log(solution2("banana")); //[-1, -1, -1, 2, 2, 2]
+console.log(solution2("foobar")); //[-1, -1, 1, -1, -1, -1]
