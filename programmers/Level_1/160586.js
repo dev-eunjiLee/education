@@ -1,11 +1,9 @@
 function solution(keymap, targets) {
   let obj = {};
 
-  //   const longLen = keymap.map(elem => elem)
+  // 반복문을 돌며 각 텍스트별 최소 입력 횟수를 정리
   for (let i = 0; i < 100; i++) {
     const perKeymap = keymap[i];
-
-    console.log({ perKeymap });
 
     if (!perKeymap) break;
 
@@ -24,6 +22,7 @@ function solution(keymap, targets) {
     }
   }
 
+  // 타겟을 돌면서 타겟에 입력된 각 글자를 입력하는 최소 횟수를 obj 객체를 통해 확인해서 누적 합계한 후 리턴
   return targets.map((elem) => {
     let sum = 0;
     for (let i = 0; i < elem.length; i++) {
