@@ -32,7 +32,38 @@ function solution(s) {
   return +answer;
 }
 
-console.log(solution("one4seveneight")); //1478
-console.log(solution("23four5six7")); //234567
-console.log(solution("2three45sixseven")); //234567
-console.log(solution("123")); //123
+// console.log(solution("one4seveneight")); //1478
+// console.log(solution("23four5six7")); //234567
+// console.log(solution("2three45sixseven")); //234567
+// console.log(solution("123")); //123
+
+const NUMBERS = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+];
+
+function solution2(s) {
+  let answer = s;
+
+  for (let i = 0; i < NUMBERS.length; i++) {
+    let arr = answer.split(NUMBERS[i]);
+
+    // Array.join(param) > param을 이용해 배열을 묶어 string으로 만든다
+    answer = arr.join(i);
+  }
+
+  return answer;
+}
+
+console.log(solution2("one4seveneight")); //1478
+console.log(solution2("23four5six7")); //234567
+console.log(solution2("2three45sixseven")); //234567
+console.log(solution2("123")); //123
