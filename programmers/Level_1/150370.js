@@ -12,11 +12,20 @@ function solution(today, terms, privacies) {
    * 풀이방식: terms를 Map으로 바꾼 후 privacies를 순회
    */
 
+  function getCustomTimestamp(year, month, day) {
+    return year * 12 * 28 + month * 28 + day;
+  }
+
   const termMap = new Map();
   terms.forEach((elem) => {
     const [term, period] = elem.split(" ");
-    termMap.set(term, Number(period));
+    termMap.set(term, getCustomTimestamp(0, Number(period), 0));
   });
+
+  const [todayYear, todayMonth, todayDay] = today
+    .split(".")
+    .map((elem) => Number(elem));
+  const todayTimestamp = getCustomTimestamp(todayYear, todayMonth, todayDay);
 
   const answer = [];
 
@@ -27,40 +36,13 @@ function solution(today, terms, privacies) {
 
     let [year, month, day] = date.split(".").map((elem) => Number(elem));
 
-    if (day === 1) {
-      day = 28;
-      month -= 1;
-    } else if (day > 1) {
-      day -= 1;
-    }
+    const validTimestamp = getCustomTimestamp(
+      Number(year),
+      Number(month),
+      Number(day) + period
+    );
 
-    let periodYear, periodMonth;
-    if (period > 12) {
-      periodYear = Math.floor(period / 12);
-      periodMonth = period % 12;
-    } else {
-      periodYear = 0;
-      periodMonth = period;
-    }
-
-    if (month + periodMonth > 12) {
-      month = month + periodMonth - 12;
-      year += 1;
-    } else if (month + periodMonth <= 12) {
-      month = month + periodMonth;
-    }
-
-    year += periodYear;
-
-    // console.log({
-    //   today,
-    //   date,
-    //   term,
-    //   period,
-    //   "new date": `${year}.${month}.${day}`,
-    // });
-
-    if (new Date(today).getTime() > new Date(year, month - 1, day).getTime()) {
+    if (todayTimestamp >= validTimestamp) {
       answer.push(index + 1);
     }
   });
