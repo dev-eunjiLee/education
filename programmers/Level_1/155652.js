@@ -77,3 +77,47 @@ function solution(s, skip, index) {
 }
 
 console.log(solution("aukks", "wbqd", 5)); //"happy"
+
+function solution2(s, skip, index) {
+  // 필터링된 알파벳 배열을 구한 후,
+  // 그 배열에서의 인덱스를 찾아,
+  // 그 인덱스에 새 인덱스 값을 더해 밀린 알파벳을 찾는다.
+  // 이 때, 뒷부분 값들은 밀릴 수 있기 때문에 필터링된 알파벳의 길이로 인덱스를 나눈 후 그 나머지값을 새 인덱스로 활용
+  const alphabets = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ].filter((elem) => !skip.includes(elem));
+
+  return [...s]
+    .map((elem) => {
+      const newIndex = alphabets.indexOf(elem) + index;
+      return alphabets[newIndex % alphabets.length];
+    })
+    .join("");
+}
+
+console.log(solution2("aukks", "wbqd", 5)); //"happy"
