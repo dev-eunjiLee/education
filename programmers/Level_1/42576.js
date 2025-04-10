@@ -43,3 +43,40 @@ console.log(
 console.log(
   solution(["mislav", "stanko", "mislav", "ana"], ["stanko", "ana", "mislav"])
 ); //"mislav"
+
+function solution2(participant, completion) {
+  // 참가자를 순회하면 참가자를 map 객체로 변경한 후 완주자를 순회하면서 참가자의 숫자를 마이너스한 후 남은 참가자를 리턴
+
+  const participantMap = new Map();
+
+  for (let i = 0; i < participant.length; i++) {
+    const nowParticipant = participant[i];
+
+    const newCnt = (participantMap.get(nowParticipant) ?? 0) + 1;
+    participantMap.set(nowParticipant, newCnt);
+  }
+
+  for (let i = 0; i < completion.length; i++) {
+    const nowCompletion = completion[i];
+
+    const newCnt = participantMap.get(nowCompletion) - 1;
+
+    if (newCnt === 0) participantMap.delete(nowCompletion);
+    else {
+      participantMap.set(nowCompletion, newCnt);
+    }
+  }
+
+  return participantMap.keys().next().value;
+}
+
+console.log(solution2(["leo", "kiki", "eden"], ["eden", "kiki"])); //"leo"
+console.log(
+  solution2(
+    ["marina", "josipa", "nikola", "vinko", "filipa"],
+    ["josipa", "filipa", "marina", "nikola"]
+  )
+); //"vinko"
+console.log(
+  solution2(["mislav", "stanko", "mislav", "ana"], ["stanko", "ana", "mislav"])
+); //"mislav"
