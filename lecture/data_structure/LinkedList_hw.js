@@ -54,18 +54,26 @@ class LinkedList {
       cnt++;
     }
 
-    const next = curr.next;
-
-    prev.next = next;
-
-    if (next) {
-      next.prev = prev;
+    if (!curr) {
+      // 삭제하려는 index에 값이 없는 경우 > 아무것도 하지 않음
     } else {
-      this.tail = prev;
-    }
-    this.length--;
+      // 다음 노드를 변수에 할당
+      const next = curr?.next;
 
-    return this.length;
+      // 과거 노드의 다음을 현재에서 다음으로 변경
+      prev.next = next;
+
+      // 만약 다음 노드가 있다면, 다음 노드의 과거도 현재에서 과거로 변경. 만약 next가 없다면 꼬리라는 소리니까 꼬리값을 과거로 변경
+      if (next) {
+        next.prev = prev;
+      } else {
+        this.tail = prev;
+      }
+
+      this.length--;
+
+      return this.length;
+    }
   }
 }
 
@@ -90,4 +98,6 @@ console.log(ll.search(1)); // 2
 console.log(ll.search(2)); // 3
 
 console.log(ll.remove(2)); // 3
+console.log(ll.remove(2)); // 2
+console.log(ll.remove(2)); // undefined
 console.log("hi");
