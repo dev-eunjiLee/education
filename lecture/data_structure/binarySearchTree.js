@@ -79,7 +79,61 @@ class BinarySearchTree {
 
     return this.#search(this.root, value);
   }
-  remove(value) {}
+
+  /**
+   * 1. leaf인 경우: 제거
+   * 2. leaf가 아니고, 왼쪽 자식이 없는 경우: 오른쪽을 끌어올린다
+   * 3. leaf가 아니고, 오른쪽 자식이 없는 경우: 왼쪽을 끌어올린다
+   * 4. leaf가 아니고 좌우 자식이 모두 있는 경우: 왼쪽에서 가장 큰 값과 바꾼 후 제거
+   */
+  remove(value) {
+    const node = this.#remove(this.root, value);
+    if (node) {
+      // 제거할 값이 있어서 노드가 바꿔치기된 경우만 root도 바꿔치기
+      this.root = node;
+    }
+  }
+
+  #remove(node, value) {
+    if (!node) {
+      // 제거할 값이 bst에 없는 경우(지울 값이 존재하지 않는 경우)
+      return false;
+    }
+    if (node.value === value) {
+      // * ===== 지울 값을 찾은 자식의 입장 ===== * //
+      if (!node.left && !node.right) {
+        // leaf인 경우 > 부모에게 삭제를 요청해야하는 경우
+        return null;
+      } else if (!node.left) {
+        // 오른팔만 있는 노드를 삭제해야하는 경우 > 오른팔을 끌어올려야함
+        return node.right;
+      } else if (!node.right) {
+        // 왼팔만 있는 노드를 삭제해야하는 경우 > 왼팔을 끌어올려야함
+        return node.left;
+      } else {
+        // leaf가 아니고 왼팔, 오른팔 다 있는 경우(왼팔에서 가장 큰 값(오른쪽의 오른쪽의 오른쪽의 오른쪽 값)과 바꾼 후 제거)
+        let exchange = node.left;
+        while (exchange.right) {
+          exchange = exchange.right;
+        }
+        // 현 node의 value와 왼쪽에서 가장 큰 값(오른쪽의 오른쪽의 오른쪽.... 값)과 서로 바꿔치기
+        [node.value, exchange.value] = [exchange.value, node.value];
+
+        node.left = this.#remove(node.left, exchange.value);
+        return node;
+      }
+    } else {
+      // * ===== 결정을 넘겨야하는 부모의 입장 ===== * //
+      if (node.value > value) {
+        // 부모의 value보다 작은 값을 찾는 경우 > 부모 기준 왼쪽에서 서칭 후 잘라내기
+        node.left = this.#remove(node.left, value);
+        return node;
+      } else {
+        node.right = this.#remove(node.right, value);
+        return node;
+      }
+    }
+  }
 }
 
 class Node {
@@ -105,3 +159,5 @@ bst.insert(13);
 // bst.insert(13);
 
 bst.search(5);
+bst.remove(8);
+console.log("end");
