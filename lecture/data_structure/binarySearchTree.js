@@ -1,5 +1,6 @@
 class BinarySearchTree {
   root = null;
+  length = 0;
 
   #insert(node, value) {
     if (node.value > value) {
@@ -29,12 +30,13 @@ class BinarySearchTree {
    * 만약 위임할 left(또는 right)가 없으면 거기에 위임한다(재귀 사용)
    */
   insert(value) {
-    // TODO (숙제) 이미 넣은 값을 넣은 경우 에러 처리
     if (!this.root) {
       this.root = new Node(value);
     } else {
       this.#insert(this.root, value);
     }
+    // 이미 있는 값인 경우 Error로 빠지기 때문에 여기에서 length++ 해줘도 된다.
+    this.length++;
   }
 
   #search(node, value) {
@@ -87,19 +89,20 @@ class BinarySearchTree {
    * 4. leaf가 아니고 좌우 자식이 모두 있는 경우: 왼쪽에서 가장 큰 값과 바꾼 후 제거
    */
   remove(value) {
-    const node = this.#remove(this.root, value);
-    if (node) {
-      // 제거할 값이 있어서 노드가 바꿔치기된 경우만 root도 바꿔치기
-      this.root = node;
-    }
+    this.root = this.#remove(this.root, value);
+
+    // TODO
+    return this.length;
   }
 
   #remove(node, value) {
     if (!node) {
       // 제거할 값이 bst에 없는 경우(지울 값이 존재하지 않는 경우)
-      return false;
+      // return null;
+      throw new Error(`트리에 있는 값만 삭제할 수 있습니다(입력값: ${value})`);
     }
     if (node.value === value) {
+      this.length--;
       // * ===== 지울 값을 찾은 자식의 입장 ===== * //
       if (!node.left && !node.right) {
         // leaf인 경우 > 부모에게 삭제를 요청해야하는 경우
@@ -156,8 +159,15 @@ bst.insert(6);
 bst.insert(7);
 bst.insert(4);
 bst.insert(13);
-// bst.insert(13);
 
 bst.search(5);
 bst.remove(8);
+bst.remove(15);
+bst.remove(4);
 console.log("end");
+
+// root node가 비워졌을때 처리
+const bst2 = new BinarySearchTree();
+bst2.insert(50);
+bst2.remove(50);
+console.log(bst2.root);
