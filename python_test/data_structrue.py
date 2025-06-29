@@ -24,6 +24,8 @@ print("COMPLEX_VAR: ", COMPLEX_VAR, type(COMPLEX_VAR))
 # 문자열
 STR_VAR='str'
 print("STR_VAR: ", STR_VAR, type(STR_VAR))
+print(STR_VAR[-1]) # r
+print(STR_VAR[-1:-10]) # "" > 슬라이싱은 왼 -> 오 방향이 기본
 
 # 배열 > 인덱스 접근 가능, 반복 가능, 타입 혼용 가능
 
@@ -45,3 +47,11 @@ print("DICT_VAR: ", DICT_VAR, type(DICT_VAR), DICT_VAR["a"])
 DICT_VAR["a"]="b" # 값 변경
 DICT_VAR["b"]="c" # 값 추가
 print("DICT_VAR: ", DICT_VAR, type(DICT_VAR), DICT_VAR["a"])
+
+# set: {} 또는 set()함수로 정의 > 순서가 없고 중복을 허용하지않음. 교집합, 합집합, 차집합 계산 가능
+SET_VAR = {"s", "e", "t"}
+print("SET_VAR: ", SET_VAR, type(SET_VAR))
+SET_VAR = set(("n", "e", "w"))
+print("SET_VAR: ", SET_VAR, type(SET_VAR))
+SET_VAR.add("added")
+print("SET_VAR: ", SET_VAR, type(SET_VAR))
